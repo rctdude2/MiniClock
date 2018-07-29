@@ -33,9 +33,10 @@
 			this.EButton_TimerReset = new System.Windows.Forms.Button();
 			this.EButton_TimerToggle = new System.Windows.Forms.Button();
 			this.ELabel_Timer = new System.Windows.Forms.Label();
-			this.ETimer_Timer = new System.Windows.Forms.Timer(this.components);
 			this.ETabControl_Main_TabOptions = new System.Windows.Forms.TabPage();
-			this.ECheckBox_KeepOnTop = new System.Windows.Forms.CheckBox();
+			this.ETimer_Timer = new System.Windows.Forms.Timer(this.components);
+			this.EButton_Options = new System.Windows.Forms.Button();
+			this.EButton_Exit = new System.Windows.Forms.Button();
 			this.ETabControl_Main.SuspendLayout();
 			this.ETabControl_Main_TabClock.SuspendLayout();
 			this.ETabControl_Main_TabTimer.SuspendLayout();
@@ -134,14 +135,10 @@
 			this.ELabel_Timer.TabIndex = 2;
 			this.ELabel_Timer.Text = "00:00:00";
 			// 
-			// ETimer_Timer
-			// 
-			this.ETimer_Timer.Interval = 1000;
-			this.ETimer_Timer.Tick += new System.EventHandler(this.ETimer_Timer_Tick);
-			// 
 			// ETabControl_Main_TabOptions
 			// 
-			this.ETabControl_Main_TabOptions.Controls.Add(this.ECheckBox_KeepOnTop);
+			this.ETabControl_Main_TabOptions.Controls.Add(this.EButton_Exit);
+			this.ETabControl_Main_TabOptions.Controls.Add(this.EButton_Options);
 			this.ETabControl_Main_TabOptions.Location = new System.Drawing.Point(4, 22);
 			this.ETabControl_Main_TabOptions.Name = "ETabControl_Main_TabOptions";
 			this.ETabControl_Main_TabOptions.Padding = new System.Windows.Forms.Padding(3);
@@ -150,18 +147,30 @@
 			this.ETabControl_Main_TabOptions.Text = "Options";
 			this.ETabControl_Main_TabOptions.UseVisualStyleBackColor = true;
 			// 
-			// ECheckBox_KeepOnTop
+			// ETimer_Timer
 			// 
-			this.ECheckBox_KeepOnTop.AutoSize = true;
-			this.ECheckBox_KeepOnTop.Checked = true;
-			this.ECheckBox_KeepOnTop.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.ECheckBox_KeepOnTop.Location = new System.Drawing.Point(8, 6);
-			this.ECheckBox_KeepOnTop.Name = "ECheckBox_KeepOnTop";
-			this.ECheckBox_KeepOnTop.Size = new System.Drawing.Size(84, 17);
-			this.ECheckBox_KeepOnTop.TabIndex = 0;
-			this.ECheckBox_KeepOnTop.Text = "Keep on top";
-			this.ECheckBox_KeepOnTop.UseVisualStyleBackColor = true;
-			this.ECheckBox_KeepOnTop.CheckedChanged += new System.EventHandler(this.ECheckBox_KeepOnTop_CheckedChanged);
+			this.ETimer_Timer.Interval = 1000;
+			this.ETimer_Timer.Tick += new System.EventHandler(this.ETimer_Timer_Tick);
+			// 
+			// EButton_Options
+			// 
+			this.EButton_Options.Location = new System.Drawing.Point(151, 3);
+			this.EButton_Options.Name = "EButton_Options";
+			this.EButton_Options.Size = new System.Drawing.Size(75, 23);
+			this.EButton_Options.TabIndex = 0;
+			this.EButton_Options.Text = "Options";
+			this.EButton_Options.UseVisualStyleBackColor = true;
+			this.EButton_Options.Click += new System.EventHandler(this.EButton_Options_Click);
+			// 
+			// EButton_Exit
+			// 
+			this.EButton_Exit.Location = new System.Drawing.Point(70, 3);
+			this.EButton_Exit.Name = "EButton_Exit";
+			this.EButton_Exit.Size = new System.Drawing.Size(75, 23);
+			this.EButton_Exit.TabIndex = 1;
+			this.EButton_Exit.Text = "Exit";
+			this.EButton_Exit.UseVisualStyleBackColor = true;
+			this.EButton_Exit.Click += new System.EventHandler(this.EButton_Exit_Click);
 			// 
 			// FormMain
 			// 
@@ -180,7 +189,6 @@
 			this.ETabControl_Main_TabTimer.ResumeLayout(false);
 			this.ETabControl_Main_TabTimer.PerformLayout();
 			this.ETabControl_Main_TabOptions.ResumeLayout(false);
-			this.ETabControl_Main_TabOptions.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -198,7 +206,8 @@
 		private System.Windows.Forms.Button EButton_TimerToggle;
 		private System.Windows.Forms.Label ELabel_Timer;
 		private System.Windows.Forms.TabPage ETabControl_Main_TabOptions;
-		private System.Windows.Forms.CheckBox ECheckBox_KeepOnTop;
+		private System.Windows.Forms.Button EButton_Options;
+		private System.Windows.Forms.Button EButton_Exit;
 	}
 }
 

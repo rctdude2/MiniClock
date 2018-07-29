@@ -12,6 +12,21 @@ namespace MiniClock {
 			timerRunning = false;
 		}
 
+		// Allow dragging using client area
+		// https://stackoverflow.com/a/3409864
+		protected override void WndProc(ref Message m) {
+			switch (m.Msg) {
+				case 0x84:
+					base.WndProc(ref m);
+					if ((int)m.Result == 0x1) {
+						m.Result = (IntPtr)0x2;
+					}
+					return;
+			}
+
+			base.WndProc(ref m);
+		}
+
 		private void FormMain_Load(object sender, EventArgs e) {
 			Update_ELabel_Time();
 			Update_ELabel_Date();
@@ -63,8 +78,21 @@ namespace MiniClock {
 			}	
 		}
 
-		private void ECheckBox_KeepOnTop_CheckedChanged(object sender, EventArgs e) {
-			this.TopMost = ((CheckBox)sender).Checked;
+		private void EButton_Options_Click(object sender, EventArgs e) {
+			FormOptions opt = new FormOptions();
+			opt.Show(this);
+		}
+
+		private void EButton_Exit_Click(object sender, EventArgs e) {
+			if (timerRunning) {
+				DialogResult exit = MessageBox.Show($"You have a timer running.{Environment.NewLine}Are you sure you wish to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+				if (exit == DialogResult.Yes) {
+					Application.Exit();
+				}
+			}
+			else {
+				Application.Exit();
+			}
 		}
 	}
 }
