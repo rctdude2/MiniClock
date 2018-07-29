@@ -55,6 +55,7 @@
 			this.ETrackBar_Opacity.TabIndex = 1;
 			this.ETrackBar_Opacity.TickFrequency = 10;
 			this.ETrackBar_Opacity.Value = 100;
+			this.ETrackBar_Opacity.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ETrackBar_Opacity_KeyUp);
 			this.ETrackBar_Opacity.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ETrackBar_Opacity_MouseUp);
 			// 
 			// ELabel_Opacity

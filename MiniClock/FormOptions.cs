@@ -17,12 +17,18 @@ namespace MiniClock {
 			this.Owner.TopMost = ((CheckBox)sender).Checked;
 		}
 
-		private void ETrackBar_Opacity_MouseUp(object sender, MouseEventArgs e) {
-			this.Owner.Opacity = (((TrackBar)sender).Value / 100.0);
-		}
-
 		private void ECheckBox_HideBorder_CheckedChanged(object sender, EventArgs e) {
 			this.Owner.FormBorderStyle = (((CheckBox)sender).Checked) ? FormBorderStyle.None : FormBorderStyle.FixedToolWindow;
+		}
+
+		private void ETrackBar_Opacity_MouseUp(object sender, MouseEventArgs e) {
+			ETrackBar_Opacity_ValueChange(sender);
+		}
+		private void ETrackBar_Opacity_KeyUp(object sender, KeyEventArgs e) {
+			ETrackBar_Opacity_ValueChange(sender);
+		}
+		private void ETrackBar_Opacity_ValueChange(object sender) {
+			this.Owner.Opacity = (((TrackBar)sender).Value / 100.0);
 		}
 	}
 }
