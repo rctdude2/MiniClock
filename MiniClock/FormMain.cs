@@ -5,9 +5,9 @@ namespace MiniClock {
     public partial class FormMain : Form {
         private ToolTip Tooltip;
 
-        private Timer Timer_Clock;
-        private Timer Timer_Stopwatch;
-        private Timer Timer_Timer;
+        private System.Timers.Timer Timer_Clock;
+        private System.Timers.Timer Timer_Stopwatch;
+        private System.Timers.Timer Timer_Timer;
 
         private TimeSpan TimeSpan_Stopwatch;
         private TimeSpan TimeSpan_Timer;
@@ -18,21 +18,24 @@ namespace MiniClock {
 
             this.Tooltip = new ToolTip();
 
-            this.Timer_Clock = new Timer {
-                Interval = (1000 * 1)
+            this.Timer_Clock = new System.Timers.Timer {
+                Interval = (1000 * 1),
+                SynchronizingObject = ELabel_DateTime
             };
-            this.Timer_Clock.Tick += this.Update_ELabel_DateTime;
+            this.Timer_Clock.Elapsed += this.Update_ELabel_DateTime;
 
-            this.Timer_Stopwatch = new Timer {
-                Interval = (1000 * 1)
+            this.Timer_Stopwatch = new System.Timers.Timer {
+                Interval = (1000 * 1),
+                SynchronizingObject = ELabel_Stopwatch
             };
-            this.Timer_Stopwatch.Tick += this.Timer_Stopwatch_Tick;
+            this.Timer_Stopwatch.Elapsed += this.Timer_Stopwatch_Tick;
             this.TimeSpan_Stopwatch = new TimeSpan();
 
-            this.Timer_Timer = new Timer {
-                Interval = (1000 * 1)
+            this.Timer_Timer = new System.Timers.Timer {
+                Interval = (1000 * 1),
+                SynchronizingObject = ELabel_Timer
             };
-            this.Timer_Timer.Tick += this.Timer_Timer_Tick;
+            this.Timer_Timer.Elapsed += this.Timer_Timer_Tick;
             this.TimeSpan_Timer = new TimeSpan();
         }
 
@@ -97,15 +100,21 @@ namespace MiniClock {
         #endregion
 
         #region Timer
+        private bool TimerSmallerFont = false;
+
         private void Timer_Timer_Tick(object sender, EventArgs e) {
+            this.TimeSpan_Timer = this.TimeSpan_Timer.Subtract(TimeSpan.FromSeconds(1));
+            ELabel_Timer.Text = this.TimeSpan_Timer.ToString();
+            if (this.TimerSmallerFont && this.TimeSpan_Timer.TotalDays < 1) {
+                ELabel_Timer.Font = new System.Drawing.Font(ELabel_Timer.Font.FontFamily.Name, 16.0F);
+                this.TimerSmallerFont = false;
+            }
             if (this.TimeSpan_Timer.TotalSeconds <= 0) {
                 this.Timer_Timer.Stop();
                 EButton_TimerToggle.Text = "Start";
                 MessageBox.Show("Timer is up!", "Timer", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            this.TimeSpan_Timer = this.TimeSpan_Timer.Subtract(TimeSpan.FromSeconds(1));
-            ELabel_Timer.Text = this.TimeSpan_Timer.ToString();
         }
 
         private void EButton_TimerToggle_Click(object sender, EventArgs e) {
@@ -132,6 +141,10 @@ namespace MiniClock {
                 this.TimeSpan_Timer = TimeSpan.FromSeconds(0);
                 this.TimeSpan_Timer = this.TimeSpan_Timer.Add(result);
                 ELabel_Timer.Text = this.TimeSpan_Timer.ToString();
+                if (this.TimeSpan_Timer.TotalDays >= 1) {
+                    ELabel_Timer.Font = new System.Drawing.Font(ELabel_Timer.Font.FontFamily.Name, 14.0F);
+                    this.TimerSmallerFont = true;
+                }
             }
             else {
                 MessageBox.Show($"\"{time}\" is not a valid time.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
