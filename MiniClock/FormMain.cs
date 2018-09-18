@@ -51,10 +51,10 @@ namespace MiniClock {
         // https://stackoverflow.com/a/3409864
         protected override void WndProc(ref Message m) {
             switch (m.Msg) {
-                case 0x84:
+                case 0x0084: // WM_NCHITTEST
                     base.WndProc(ref m);
-                    if ((int)m.Result == 0x1) {
-                        m.Result = (IntPtr)0x2;
+                    if ((int)m.Result == 0x1) { // HTCLIENT
+                        m.Result = (IntPtr)0x2; // HTCAPTION
                     }
                     return;
             }
@@ -137,6 +137,7 @@ namespace MiniClock {
             string time = Microsoft.VisualBasic.Interaction.InputBox("Enter a time (hh:mm:ss):", DefaultResponse: "00:00:00");
             this.TopMost = Properties.Settings.Default.U_KeepOnTop;
             bool validtime = TimeSpan.TryParse(time, out TimeSpan result);
+            if (time == string.Empty) { return; }
             if (validtime) {
                 this.TimeSpan_Timer = TimeSpan.FromSeconds(0);
                 this.TimeSpan_Timer = this.TimeSpan_Timer.Add(result);
