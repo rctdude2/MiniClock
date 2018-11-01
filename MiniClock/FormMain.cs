@@ -121,16 +121,19 @@ namespace MiniClock {
             if (!this.Timer_Timer.Enabled && this.TimeSpan_Timer.TotalSeconds > 0) {
                 this.Timer_Timer.Start();
                 EButton_TimerToggle.Text = "Stop";
+                EButton_TimerSet.Text = "+1:00";
             }
             else if (this.Timer_Timer.Enabled) {
                 this.Timer_Timer.Stop();
                 EButton_TimerToggle.Text = "Start";
+                EButton_TimerSet.Text = "Set";
             }
         }
 
         private void EButton_TimerSet_Click(object sender, EventArgs e) {
             if (this.Timer_Timer.Enabled) {
-                this.Tooltip.Show("Stop the timer first.", this, EButton_TimerSet.Location + EButton_TimerSet.Size, 3000);
+                this.TimeSpan_Timer = this.TimeSpan_Timer.Add(TimeSpan.FromMinutes(1));
+                ELabel_Timer.Text = this.TimeSpan_Timer.ToString();
                 return;
             }
             this.TopMost = false;
@@ -156,6 +159,7 @@ namespace MiniClock {
             if (this.Timer_Timer.Enabled) {
                 this.Timer_Timer.Stop();
                 EButton_TimerToggle.Text = "Start";
+                EButton_TimerSet.Text = "Set";
                 this.Tooltip.Show("Click again to reset timer.", this, EButton_TimerReset.Location + EButton_TimerReset.Size, 3000);
             }
             else {
