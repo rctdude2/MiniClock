@@ -16,6 +16,12 @@ namespace MiniClock {
         public FormMain() {
             InitializeComponent();
 
+            if (Properties.Settings.Default.UpgradeRequired) {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeRequired = false;
+                Properties.Settings.Default.Save();
+            }
+
             this.Tooltip = new ToolTip();
 
             this.Timer_Clock = new System.Timers.Timer {
